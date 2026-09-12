@@ -1,0 +1,388 @@
+type: '@adam/software-factory'
+typeVersion: 2026.06.15.1
+id: 797c4a1a-253c-4dac-94f0-330d51c9f499
+name: architecture-development-factory
+version: 1
+tags:
+  project: architecture-development
+  purpose: archi-model-swamp-extension
+globalArguments:
+  stages:
+    - id: planning
+      description: Plan one architecture-development Backlog work item before changing extension files.
+      initial: true
+      work:
+        mode: interactive
+        skills:
+          - software-factory
+        systemPrompt: >-
+          Work on the selected architecture-development Backlog work item. Plan the
+          smallest cohesive change for the Swamp extension that will guide agents and
+          provide an interface to the Archi model. Explicitly identify the Archi model
+          boundary, Swamp extension contracts, repository files to change, validation
+          approach, and risks before changing implementation files.
+      artifacts:
+        - name: plan
+          description: Implementation plan for the selected Backlog work item.
+          schema:
+            type: object
+            required:
+              - summary
+              - scope
+              - architectureModelInterface
+              - steps
+              - testingStrategy
+            properties:
+              summary:
+                type: string
+                minLength: 1
+              scope:
+                type: object
+                required:
+                  - inScope
+                  - outOfScope
+                properties:
+                  inScope:
+                    type: array
+                    items:
+                      type: string
+                      minLength: 1
+                  outOfScope:
+                    type: array
+                    items:
+                      type: string
+              architectureModelInterface:
+                type: object
+                required:
+                  - archiModelDependencies
+                  - swampExtensionContracts
+                  - assumptions
+                properties:
+                  archiModelDependencies:
+                    type: array
+                    items:
+                      type: string
+                      minLength: 1
+                  swampExtensionContracts:
+                    type: array
+                    items:
+                      type: string
+                      minLength: 1
+                  assumptions:
+                    type: array
+                    items:
+                      type: string
+              steps:
+                type: array
+                minItems: 1
+                items:
+                  type: object
+                  required:
+                    - description
+                    - files
+                  properties:
+                    description:
+                      type: string
+                      minLength: 1
+                    files:
+                      type: array
+                      items:
+                        type: string
+                        minLength: 1
+              testingStrategy:
+                type: string
+                minLength: 1
+              risks:
+                type: array
+                items:
+                  type: string
+      transitions:
+        - name: submit-plan
+          to: plan-review
+          gates:
+            - type: artifact-exists
+              config:
+                artifact: plan
+
+    - id: plan-review
+      description: Review the proposed extension plan for scope, Archi model boundary clarity, and verifiability.
+      work:
+        mode: interactive
+        skills:
+          - software-factory
+        systemPrompt: >-
+          Review the recorded plan against the Backlog work item, repository guidance,
+          Swamp extension boundaries, and Archi model interface assumptions. Record
+          actionable findings with stable IDs. An empty findings list is valid only when
+          the plan is small, testable, and clear about what belongs in the extension
+          versus the Archi Software Factory project.
+        context:
+          inject:
+            - plan
+      artifacts:
+        - name: plan-review
+          description: Findings from reviewing the plan.
+          kind: findings
+          reviews: plan
+          schema:
+            type: object
+            required:
+              - summary
+              - findings
+            properties:
+              summary:
+                type: string
+                minLength: 1
+              findings:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - id
+                    - severity
+                    - description
+                  properties:
+                    id:
+                      type: string
+                      minLength: 1
+                    severity:
+                      type: string
+                      enum:
+                        - critical
+                        - high
+                        - medium
+                        - low
+                    description:
+                      type: string
+                      minLength: 1
+                    category:
+                      type: string
+                    resolved:
+                      type: boolean
+                    resolutionNote:
+                      type: string
+      transitions:
+        - name: approve-plan
+          to: implementation
+          gates:
+            - type: artifact-fresh
+              config:
+                artifact: plan-review
+                recordedThisCycle: true
+            - type: findings-clear
+              config:
+                artifact: plan-review
+                blocking:
+                  - critical
+                  - high
+            - type: human-approval
+              config:
+                id: plan-approval
+        - name: revise-plan
+          to: planning
+          manual: true
+
+    - id: implementation
+      description: Implement the approved extension change.
+      work:
+        mode: interactive
+        skills:
+          - software-factory
+        systemPrompt: >-
+          Implement the approved plan for the selected work item. Keep the change inside
+          the architecture-development Swamp extension repository, maintain a clear
+          boundary from the Archi Software Factory application repository, and document
+          how the extension guides or interfaces with the Archi model. Record the files
+          changed, delivered behavior, tests run or deferred, and remaining risks.
+        context:
+          inject:
+            - plan
+            - plan-review
+      artifacts:
+        - name: implementation
+          description: Implementation result and verification handoff.
+          schema:
+            type: object
+            required:
+              - summary
+              - changedFiles
+              - deliveredBehavior
+              - tests
+              - risks
+            properties:
+              summary:
+                type: string
+                minLength: 1
+              changedFiles:
+                type: array
+                minItems: 1
+                items:
+                  type: string
+                  minLength: 1
+              deliveredBehavior:
+                type: array
+                minItems: 1
+                items:
+                  type: string
+                  minLength: 1
+              tests:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - command
+                    - result
+                  properties:
+                    command:
+                      type: string
+                      minLength: 1
+                    result:
+                      type: string
+                      minLength: 1
+                    details:
+                      type: string
+              risks:
+                type: array
+                items:
+                  type: string
+      transitions:
+        - name: submit-implementation
+          to: verification
+          gates:
+            - type: artifact-exists
+              config:
+                artifact: implementation
+
+    - id: verification
+      description: Verify the extension change with repeatable checks.
+      work:
+        mode: interactive
+        skills:
+          - software-factory
+        systemPrompt: >-
+          Verify the implementation against the work item acceptance criteria and the
+          recorded testing strategy. Run available Swamp extension checks, model factory
+          validation, unit or integration tests, and any Archi model interface checks that
+          are safe in this repository. Record verification evidence with status exactly
+          'passed' or 'failed', plus commands, results, and important output.
+        context:
+          inject:
+            - plan
+            - implementation
+      evidence:
+        - name: verification
+          description: Result of repeatable verification commands for this work item.
+      transitions:
+        - name: submit-verification
+          to: code-review
+          gates:
+            - type: evidence-recorded
+              config:
+                name: verification
+                requireField:
+                  status: passed
+        - name: fix-verification
+          to: implementation
+          manual: true
+
+    - id: code-review
+      description: Review the implementation and verification evidence before completion.
+      work:
+        mode: interactive
+        skills:
+          - software-factory
+        systemPrompt: >-
+          Review the implementation, repository diff, recorded verification evidence,
+          and Archi model interface implications. Record stable, actionable findings. An
+          empty findings list is valid only when the work item is ready to complete.
+        context:
+          inject:
+            - plan
+            - implementation
+            - verification
+      artifacts:
+        - name: code-review
+          description: Findings from reviewing the implementation.
+          kind: findings
+          reviews: implementation
+          schema:
+            type: object
+            required:
+              - summary
+              - findings
+            properties:
+              summary:
+                type: string
+                minLength: 1
+              findings:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - id
+                    - severity
+                    - description
+                  properties:
+                    id:
+                      type: string
+                      minLength: 1
+                    severity:
+                      type: string
+                      enum:
+                        - critical
+                        - high
+                        - medium
+                        - low
+                    description:
+                      type: string
+                      minLength: 1
+                    category:
+                      type: string
+                    resolved:
+                      type: boolean
+                    resolutionNote:
+                      type: string
+      transitions:
+        - name: accept
+          to: completed
+          gates:
+            - type: artifact-fresh
+              config:
+                artifact: code-review
+                recordedThisCycle: true
+            - type: findings-clear
+              config:
+                artifact: code-review
+                blocking:
+                  - critical
+                  - high
+            - type: human-approval
+              config:
+                id: implementation-approval
+        - name: revise-implementation
+          to: implementation
+          manual: true
+
+    - id: completed
+      description: The work item has passed planning, review, implementation, verification, and explicit human approval.
+      terminal: true
+
+    - id: aborted
+      description: The work item was explicitly stopped by a human.
+      terminal: true
+
+  globalTransitions:
+    - name: abort
+      to: aborted
+      gates:
+        - type: human-approval
+          config:
+            id: abort-confirmation
+
+reports:
+  require:
+    - name: '@adam/software-factory/work-item-summary'
+      methods:
+        - summary
+
+methods: {}
