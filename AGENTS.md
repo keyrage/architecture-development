@@ -2,7 +2,17 @@
 
 ## Purpose
 
-Develop the `architecture-development` Swamp extension. The extension will guide AI agents through architecture-development work and provide the extension-facing interface to the Archi model used by the Archi Software Factory.
+Develop the `architecture-development` Swamp extension as the target repository for architecture-development workflow capabilities. The extension will guide AI agents through architecture-development work and provide the extension-facing interface to the Archi model used by the Archi Software Factory.
+
+## Architecture direction
+
+- This repository is the home for the `architecture-development` Swamp extension.
+- The architecture-development workflow must be implemented as a Swamp extension, not inside the Archi plug-in/application.
+- The extension must support AI-agent-initiated execution independent of a human user triggering actions in Archi.
+- Design entrypoints, commands, configuration, status reporting, and errors so an AI agent can discover, start, monitor, and recover workflow execution autonomously.
+- Use stable integration boundaries to interact with Archi Software Factory assets, such as explicit files, model exports/imports, command interfaces, or documented APIs.
+- Avoid coupling to Archi plug-in internals unless a deliberate, documented interface is introduced.
+- Keep extension contracts, Archi model interface assumptions, and agent-facing workflow behavior explicit in plans and documentation.
 
 ## Repository boundaries
 
@@ -23,7 +33,6 @@ Develop the `architecture-development` Swamp extension. The extension will guide
 ## Development notes
 
 - Use Backlog.md for planned extension work.
-- Keep extension contracts, Archi model interface assumptions, and agent guidance explicit in plans and documentation.
 - Prefer small, independently verifiable changes.
 
 <!-- BACKLOG.MD GUIDELINES START -->
