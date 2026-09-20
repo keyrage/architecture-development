@@ -9,6 +9,10 @@ This repository is the starting point for an Archi Software Factory Swamp extens
 - Keep this repository distinct from `../archimate-software-factory`, which contains the Archi plug-in/application implementation.
 - Keep Swamp runtime state (`.swamp/`) local and uncommitted.
 
+## Development roadmap
+
+Development starts with a read-only, whole-model ArchiMate 3.2 assessment performed by specialist agents and discussed with the user. Later slices add richer lenses, structured change proposals, governed mutation, and architecture-guided software delivery. See [`docs/development-roadmap.md`](docs/development-roadmap.md).
+
 ## Initialized tooling
 
 - Git repository initialized in this directory.
