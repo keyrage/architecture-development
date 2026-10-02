@@ -1,0 +1,11 @@
+{
+  "compilerOptions": { "strict": true, "noImplicitOverride": true, "noUncheckedIndexedAccess": true },
+  "fmt": { "lineWidth": 120, "singleQuote": false },
+  "lint": { "rules": { "tags": ["recommended"] } },
+  "tasks": {
+    "check": "/home/agent/.swamp/deno/deno check extensions/models/architecture-development/architecture_review.ts extensions/models/architecture-development/_lib/*.ts",
+    "test": "/home/agent/.swamp/deno/deno test extensions/models/architecture-development/**/*_test.ts",
+    "fmt": "/home/agent/.swamp/deno/deno fmt --check extensions/models/architecture-development",
+    "lint": "/home/agent/.swamp/deno/deno lint extensions/models/architecture-development"
+  }
+}

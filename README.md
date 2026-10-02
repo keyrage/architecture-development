@@ -1,55 +1,48 @@
-# Architecture Development
+# @keyrage/architecture-development
 
-This repository is the starting point for an Archi Software Factory Swamp extension that will guide AI agents and provide the extension-facing interface to the Archi model.
+A read-only Swamp extension for reviewing a complete, active published ArchiMate 3.2 semantic model. It collects bounded v1 HTTP evidence coherently, runs a user-selected subset of six specialists and eight fixed declaration-driven review lenses, preserves every finding, ranks recommendations deterministically, and records follow-up and disposition history.
 
-## Repository role
+## Safety boundary
 
-- This is a separate git repository under the Archi Software Factory parent directory.
-- It is for the `architecture-development` Swamp extension and its delivery workflow.
-- Keep this repository distinct from `../archimate-software-factory`, which contains the Archi plug-in/application implementation.
-- Keep Swamp runtime state (`.swamp/`) local and uncommitted.
+The extension uses only the packaged Archi Software Factory public v1 HTTP/JSON query contract. It never uses Memgraph/Bolt, mutates a model, performs formal ArchiMate validation, reads diagrams or unpublished history, or inspects repository files that are not referenced by the model's `softwareFactory.executable.v1.targetPath` properties. Bearer credentials are configured through a sensitive vault-backed model argument and never enter resources, instance names, logs, or errors.
 
-## Development roadmap
+## Configure a model
 
-Development starts with a read-only, whole-model ArchiMate 3.2 assessment performed by specialist agents and discussed with the user. Later slices add richer lenses, structured change proposals, governed mutation, and architecture-guided software delivery. See [`docs/development-roadmap.md`](docs/development-roadmap.md).
+Create one `@keyrage/architecture-development/review` definition for each model. Store only non-secret metadata in the definition and a vault expression for the credential:
 
-## Initialized tooling
-
-- Git repository initialized in this directory.
-- Backlog.md initialized in `.backlog/`.
-- Swamp repository initialized via `.swamp.yaml`.
-- The `@adam/software-factory` extension is pinned in `extensions/models/upstream_extensions.json`.
-- The software-factory instance is defined at `models/@adam/software-factory/architecture-development-factory.yaml`.
-
-## Restoring Swamp dependencies
-
-After cloning or checking out this repository, restore the pinned Swamp extension with:
-
-```bash
-swamp extension install
+```yaml
+type: '@keyrage/architecture-development/review'
+name: payments-review
+version: 1
+globalArguments:
+  modelId: payments-model
+  endpointFile: ${XDG_RUNTIME_DIR:-$HOME/.cache}/archimate-software-factory/agent-query-endpoint
+  bearerToken: ${{ vault.get('architecture-review', 'payments-token') }}
+  repositoryRoot: /workspaces/payments
 ```
 
-Validate the factory definition with:
+Select a definition explicitly. The default expected groups are Application and Technology; the default specialist selection is all six. A user may choose any non-empty subset before collection. Version-2 reviews additionally support the fixed domain, qualityAttribute, deployment, data, security, resilience, governance, and organization lenses. For a **lens-only V2 review**, explicitly send `selectedSpecialists: []` with `selectedLenses` on `start_review` and verify the returned specialist selection is empty. Omitting specialists currently also selects all six, persists that scope across resume, increases usage and findings, and competes in global ranking. This accepted temporary deviation is tracked as TASK-2.6; see `docs/review-lenses.md` for the request example.
 
-```bash
-swamp model method run architecture-development-factory validate
-swamp model method run architecture-development-factory describe
+## Read-only review lifecycle
+
+```text
+start_review → collect_evidence → record_assessments → record_synthesis → dialogue
+                                                                          ↘ stop/resume
 ```
 
-## Starting future work
+Collection stages every page in a method-run temporary directory and writes nothing durable until all folders, elements, and relationships are revision-coherent. The first published-revision movement discards the staging tree and retries once; a second movement fails closed. Evidence chunks and the manifest retain model ID, revision, counts, and SHA-256 digests.
 
-Use Backlog.md for work-item tracking:
+Synthesis requires exact finding coverage, scores every recommendation with `impact*4 + confidence*3 + scope*2 + (6-effort)`, and returns strengths plus the global top ten. Specialist selection is immutable within an epoch. A changed revision on resume starts a new epoch while retaining prior records. Dispositions are explicit (`accepted`, `rejected`, `deferred`, `needs-investigation`, or `undecided`) and never inferred.
 
-```bash
-backlog instructions overview
-backlog task list --plain
-```
+## Development checks
 
-Start a factory run only for an explicit Backlog work item:
+The repository uses the bundled Deno identified by `swamp doctor extensions`:
 
 ```bash
-swamp model method run architecture-development-factory start --input workItem=TASK-1
-swamp model method run architecture-development-factory status --input workItem=TASK-1
+/home/agent/.swamp/deno/deno check extensions/models/architecture-development/architecture_review.ts extensions/models/architecture-development/_lib/*.ts
+/home/agent/.swamp/deno/deno fmt --check extensions/models/architecture-development
+/home/agent/.swamp/deno/deno lint extensions/models/architecture-development
+swamp extension push manifest.yaml --dry-run
 ```
 
-Resume existing work with `status`; do not call `start` again for an existing work item.
+The mandatory adversarial-review report must be presented and acknowledged before running unit tests or a live smoke. A verified public repository URL is still required before publication; no registry push is performed by this repository's checks.

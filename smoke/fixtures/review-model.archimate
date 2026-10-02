@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://www.archimatetool.com/archimate" xmlns:archimate="http://www.archimatetool.com/archimate" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Architecture Development live smoke fixture" id="live-smoke-model">
+  <folder name="Application" type="application" id="application-folder">
+    <element xsi:type="archimate:ApplicationComponent" name="Review API" id="application-review-api" documentation="Read-only review fixture component" />
+  </folder>
+  <folder name="Technology" type="technology" id="technology-folder">
+    <element xsi:type="archimate:Node" name="Review Runtime" id="technology-review-runtime" documentation="Disposable live-smoke runtime" />
+  </folder>
+  <folder name="Relations" type="relations" id="relations-folder">
+    <element xsi:type="archimate:ServingRelationship" name="serves" id="serving-review-runtime" source="technology-review-runtime" target="application-review-api" />
+  </folder>
+</model>

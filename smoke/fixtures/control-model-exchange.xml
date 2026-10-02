@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://www.opengroup.org/xsd/archimate/3.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengroup.org/xsd/archimate/3.0/ http://www.opengroup.org/xsd/archimate/3.1/archimate3_Diagram.xsd" identifier="task22-model">
+  <name xml:lang="en">(new model)</name>
+  <elements>
+    <element identifier="id-acc6b7a765814bf79f6232fedc8b5e9b" xsi:type="ApplicationComponent">
+      <name xml:lang="en">Application Component</name>
+    </element>
+    <element identifier="id-7a59770232d246d68b29d6760bda51f8" xsi:type="ApplicationInterface">
+      <name xml:lang="en">Application Interface</name>
+    </element>
+    <element identifier="id-01af7520468542f696bab0fdf1c62c82" xsi:type="DataObject">
+      <name xml:lang="en">Data Object</name>
+    </element>
+    <element identifier="id-02385d2262f74ab9bf8ab88b7921a0a4" xsi:type="SystemSoftware">
+      <name xml:lang="en">System Software</name>
+    </element>
+    <element identifier="id-59c98bf6b2b34754913d922649c3f817" xsi:type="Node">
+      <name xml:lang="en">Node</name>
+    </element>
+    <element identifier="id-f795ca245dd744a5a40c997d9a367c31" xsi:type="Artifact">
+      <name xml:lang="en">Artifact</name>
+    </element>
+    <element identifier="id-f3f78e17c1144e3e998748c532b44515" xsi:type="TechnologyInterface">
+      <name xml:lang="en">Technology Interface</name>
+    </element>
+  </elements>
+  <relationships>
+    <relationship identifier="id-7d2f8fa3e0dd4b9ab85f50df9ce186a3" source="id-acc6b7a765814bf79f6232fedc8b5e9b" target="id-7a59770232d246d68b29d6760bda51f8" xsi:type="Composition" />
+    <relationship identifier="id-4308e7bec8c44279a63e26bef90b2d1b" source="id-acc6b7a765814bf79f6232fedc8b5e9b" target="id-01af7520468542f696bab0fdf1c62c82" xsi:type="Access" accessType="Write" />
+    <relationship identifier="id-74fa6f33fec34137b34adcca9e53e23d" source="id-f795ca245dd744a5a40c997d9a367c31" target="id-01af7520468542f696bab0fdf1c62c82" xsi:type="Realization" />
+    <relationship identifier="id-cc89f5b047e24c508c8856a77db1d28a" source="id-02385d2262f74ab9bf8ab88b7921a0a4" target="id-f3f78e17c1144e3e998748c532b44515" xsi:type="Composition" />
+    <relationship identifier="id-396379d5068541468fa2e4df1fc84a06" source="id-f3f78e17c1144e3e998748c532b44515" target="id-acc6b7a765814bf79f6232fedc8b5e9b" xsi:type="Serving" />
+    <relationship identifier="id-f8d5041fb764454590c336fc7a746bbe" source="id-59c98bf6b2b34754913d922649c3f817" target="id-acc6b7a765814bf79f6232fedc8b5e9b" xsi:type="Realization" />
+  </relationships>
+  <organizations>
+    <item>
+      <label xml:lang="en">Application</label>
+      <item identifierRef="id-acc6b7a765814bf79f6232fedc8b5e9b" />
+      <item identifierRef="id-7a59770232d246d68b29d6760bda51f8" />
+      <item identifierRef="id-01af7520468542f696bab0fdf1c62c82" />
+    </item>
+    <item>
+      <label xml:lang="en">Technology &amp; Physical</label>
+      <item identifierRef="id-02385d2262f74ab9bf8ab88b7921a0a4" />
+      <item identifierRef="id-59c98bf6b2b34754913d922649c3f817" />
+      <item identifierRef="id-f795ca245dd744a5a40c997d9a367c31" />
+      <item identifierRef="id-f3f78e17c1144e3e998748c532b44515" />
+    </item>
+    <item>
+      <label xml:lang="en">Relations</label>
+      <item identifierRef="id-7d2f8fa3e0dd4b9ab85f50df9ce186a3" />
+      <item identifierRef="id-4308e7bec8c44279a63e26bef90b2d1b" />
+      <item identifierRef="id-74fa6f33fec34137b34adcca9e53e23d" />
+      <item identifierRef="id-cc89f5b047e24c508c8856a77db1d28a" />
+      <item identifierRef="id-396379d5068541468fa2e4df1fc84a06" />
+      <item identifierRef="id-f8d5041fb764454590c336fc7a746bbe" />
+    </item>
+    <item>
+      <label xml:lang="en">Views</label>
+      <item identifierRef="id-4ae3324bb2a34587a0a88d5514c56bb2" />
+    </item>
+  </organizations>
+  <views>
+    <diagrams>
+      <view identifier="id-4ae3324bb2a34587a0a88d5514c56bb2" xsi:type="Diagram">
+        <name xml:lang="en">Default View</name>
+        <node identifier="id-6e201bc8c4ff4c229c4a0c5d999abc10" elementRef="id-acc6b7a765814bf79f6232fedc8b5e9b" xsi:type="Element" x="980" y="401" w="120" h="55">
+          <style>
+            <fillColor r="181" g="255" b="255" a="100" />
+            <lineColor r="92" g="92" b="92" a="100" />
+            <font name="Sans" size="9">
+              <color r="0" g="0" b="0" />
+            </font>
+          </style>
+        </node>
+        <node identifier="id-c9f545c5078441f18479b1b99ab31a41" elementRef="id-7a59770232d246d68b29d6760bda51f8" xsi:type="Element" x="980" y="288" w="120" h="55">
+          <style>
+            <fillColor r="181" g="255" b="255" a="100" />
+            <lineColor r="92" g="92" b="92" a="100" />
+            <font name="Sans" size="9">
+              <color r="0" g="0" b="0" />
+            </font>
+          </style>
+        </node>
+        <node identifier="id-89fa92604ea54dfba12df18dfb6f4e26" elementRef="id-01af7520468542f696bab0fdf1c62c82" xsi:type="Element" x="984" y="527" w="120" h="55">
+          <style>
+            <fillColor r="181" g="255" b="255" a="100" />
+            <lineColor r="92" g="92" b="92" a="100" />
+            <font name="Sans" size="9">
+              <color r="0" g="0" b="0" />
+            </font>
+          </style>
+        </node>
+        <node identifier="id-4ffda35728ed46388c3d2ad049ef64c7" elementRef="id-02385d2262f74ab9bf8ab88b7921a0a4" xsi:type="Element" x="780" y="626" w="120" h="55">
+          <style>
+            <fillColor r="201" g="231" b="183" a="100" />
+            <lineColor r="92" g="92" b="92" a="100" />
+            <font name="Sans" size="9">
+              <color r="0" g="0" b="0" />
+            </font>
+          </style>
+        </node>
+        <node identifier="id-c61668f647724a2a9b323d579a7605ed" elementRef="id-59c98bf6b2b34754913d922649c3f817" xsi:type="Element" x="792" y="401" w="120" h="55">
+          <style>
+            <fillColor r="201" g="231" b="183" a="100" />
+            <lineColor r="92" g="92" b="92" a="100" />
+            <font name="Sans" size="9">
+              <color r="0" g="0" b="0" />
+            </font>
+          </style>
+        </node>
+        <node identifier="id-1598ec713ad047048e0b1ec3cf75ac63" elementRef="id-f795ca245dd744a5a40c997d9a367c31" xsi:type="Element" x="984" y="636" w="120" h="55">
+          <style>
+            <fillColor r="201" g="231" b="183" a="100" />
+            <lineColor r="92" g="92" b="92" a="100" />
+            <font name="Sans" size="9">
+              <color r="0" g="0" b="0" />
+            </font>
+          </style>
+        </node>
+        <node identifier="id-cea92e508b4442fda8927b0229571045" elementRef="id-f3f78e17c1144e3e998748c532b44515" xsi:type="Element" x="780" y="527" w="120" h="55">
+          <style>
+            <fillColor r="201" g="231" b="183" a="100" />
+            <lineColor r="92" g="92" b="92" a="100" />
+            <font name="Sans" size="9">
+              <color r="0" g="0" b="0" />
+            </font>
+          </style>
+        </node>
+        <connection identifier="id-9bebcef0b18247d6b31cf94a042f5c9c" relationshipRef="id-7d2f8fa3e0dd4b9ab85f50df9ce186a3" xsi:type="Relationship" source="id-6e201bc8c4ff4c229c4a0c5d999abc10" target="id-c9f545c5078441f18479b1b99ab31a41">
+          <style>
+            <lineColor r="0" g="0" b="0" />
+            <font name="Sans" size="9">
+              <color r="0" g="0" b="0" />
+            </font>
+          </style>
+        </connection>
+        <connection identifier="id-770ebcb1e0dc44638dc259c4866006f2" relationshipRef="id-4308e7bec8c44279a63e26bef90b2d1b" xsi:type="Relationship" source="id-6e201bc8c4ff4c229c4a0c5d999abc10" target="id-89fa92604ea54dfba12df18dfb6f4e26">
+          <style>
+            <lineColor r="0" g="0" b="0" />
+            <font name="Sans" size="9">
+              <color r="0" g="0" b="0" />
+            </font>
+          </style>
+        </connection>
+        <connection identifier="id-60819971930e45b184dafe9304657e79" relationshipRef="id-cc89f5b047e24c508c8856a77db1d28a" xsi:type="Relationship" source="id-4ffda35728ed46388c3d2ad049ef64c7" target="id-cea92e508b4442fda8927b0229571045">
+          <style>
+            <lineColor r="0" g="0" b="0" />
+            <font name="Sans" size="9">
+              <color r="0" g="0" b="0" />
+            </font>
+          </style>
+        </connection>
+        <connection identifier="id-e04af1871e2846448b5824539790a06e" relationshipRef="id-f8d5041fb764454590c336fc7a746bbe" xsi:type="Relationship" source="id-c61668f647724a2a9b323d579a7605ed" target="id-6e201bc8c4ff4c229c4a0c5d999abc10">
+          <style>
+            <lineColor r="0" g="0" b="0" />
+            <font name="Sans" size="9">
+              <color r="0" g="0" b="0" />
+            </font>
+          </style>
+        </connection>
+        <connection identifier="id-378170cc85fb47e4885d000f19fd6f2a" relationshipRef="id-74fa6f33fec34137b34adcca9e53e23d" xsi:type="Relationship" source="id-1598ec713ad047048e0b1ec3cf75ac63" target="id-89fa92604ea54dfba12df18dfb6f4e26">
+          <style>
+            <lineColor r="0" g="0" b="0" />
+            <font name="Sans" size="9">
+              <color r="0" g="0" b="0" />
+            </font>
+          </style>
+        </connection>
+        <connection identifier="id-078d0285b4124a2baf2342ce7f690e2c" relationshipRef="id-396379d5068541468fa2e4df1fc84a06" xsi:type="Relationship" source="id-cea92e508b4442fda8927b0229571045" target="id-6e201bc8c4ff4c229c4a0c5d999abc10">
+          <style>
+            <lineColor r="0" g="0" b="0" />
+            <font name="Sans" size="9">
+              <color r="0" g="0" b="0" />
+            </font>
+          </style>
+        </connection>
+      </view>
+    </diagrams>
+  </views>
+</model>

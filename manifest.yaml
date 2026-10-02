@@ -1,0 +1,32 @@
+manifestVersion: 1
+name: '@keyrage/architecture-development'
+version: 2026.09.28.1
+description: >-
+  Read-only ArchiMate architecture review through complete revision-coherent
+  model evidence, selectable specialist and domain lenses, deterministic
+  synthesis, and durable user-directed dialogue.
+paths:
+  base: typedDir
+models:
+  - architecture-development/architecture_review.ts
+skills:
+  - architecture-review
+additionalFiles:
+  - README.md
+  - LICENSE
+  - docs/configuration.md
+  - docs/review-records.md
+  - docs/live-smoke.md
+  - docs/review-lenses.md
+  - .claude/skills/architecture-review/SKILL.md
+  - .claude/skills/architecture-review/references/model-boundary.md
+  - .claude/skills/architecture-review/references/specialists.md
+  - .claude/skills/architecture-review/references/dialogue.md
+platforms:
+  - linux-x86_64
+labels:
+  - architecture
+  - archimate
+  - read-only
+  - review
+dependencies: []

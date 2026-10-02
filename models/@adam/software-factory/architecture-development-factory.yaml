@@ -183,6 +183,7 @@ globalArguments:
           manual: true
 
     - id: implementation
+      maxCycles: 10
       description: Implement the approved extension change.
       work:
         mode: interactive
@@ -254,6 +255,7 @@ globalArguments:
                 artifact: implementation
 
     - id: verification
+      maxCycles: 10
       description: Verify the extension change with repeatable checks.
       work:
         mode: interactive
